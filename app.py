@@ -139,14 +139,14 @@ if st.sidebar.button("Analyze"):
             
             # נקודות ירוקות/אדומות
             colors = data['Above Mean'].map({True: '#2ECC71', False: '#E74C3C'})
-            ax.scatter(data.index, prices, c=colors, s=6, label='Above/Below Mean')
+            ax.scatter(data.index, prices, c=colors, s=5, label='Above/Below Mean')
             
             # קווים לממוצע וחציון
             ax.axhline(overall_mean, color='#3498DB', linestyle='--', linewidth=1.5, label=f'Mean: {overall_mean:.2f}')
             ax.axhline(overall_median, color='#F39C12', linestyle='--', linewidth=1.5, label=f'Median: {overall_median:.2f}')
             
             # טקסטים ועיצוב
-            ax.set_title(f'Price vs Mean & Median ({symbol})', fontsize=16, weight='bold', color='white')
+            ax.set_title(f'Price vs Mean & Median ({symbol})', fontsize=12, weight='normal', color='white')
             ax.set_xlabel('Date', fontsize=12, color='white')
             ax.set_ylabel(f'Price ({symbol})', fontsize=12, color='white')
             ax.tick_params(colors='white')
