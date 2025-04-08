@@ -59,8 +59,8 @@ if st.sidebar.button("Analyze"):
             ci_upper = mean_price + z_score * stderr
 
             st.subheader("📈 Statistics:")
-            st.write(f"**Mean Price**: {mean_price:.4f} ILS")
-            st.write(f"**Standard Deviation**: {std_price:.4f} ILS")
+            st.write(f"**Mean Price**: {mean_price:.4f}")
+            st.write(f"**Standard Deviation**: {std_price:.4f}")
             st.write(f"**Within 1 Std**: ({one_std_lower:.4f}, {one_std_upper:.4f}) → {within_one_std:.2f}%")
             st.write(f"**Within 2 Std**: ({two_std_lower:.4f}, {two_std_upper:.4f}) → {within_two_std:.2f}%")
             st.write(f"**{int(confidence_level * 100)}% Confidence Interval**: ({ci_lower:.4f}, {ci_upper:.4f})")
@@ -74,17 +74,17 @@ if st.sidebar.button("Analyze"):
             
             # קווים סטטיסטיים עם צבעים זוהרים ונעימים לעין
             ax.axvline(mean_price, color='#3498DB', linestyle='--', linewidth=2, label='Mean')
-            ax.axvline(one_std_lower, color='#2ECC71', linestyle='--', linewidth=1.5, label='-1 Std Dev')
-            ax.axvline(one_std_upper, color='#2ECC71', linestyle='--', linewidth=1.5, label='+1 Std Dev')
-            ax.axvline(two_std_lower, color='#E74C3C', linestyle='--', linewidth=1.5, label='-2 Std Dev')
-            ax.axvline(two_std_upper, color='#E74C3C', linestyle='--', linewidth=1.5, label='+2 Std Dev')
-            ax.axvline(ci_lower, color='#9B59B6', linestyle='-.', linewidth=2, label='CI Lower')
-            ax.axvline(ci_upper, color='#9B59B6', linestyle='-.', linewidth=2, label='CI Upper')
+            ax.axvline(one_std_lower, color='#2ECC71', linestyle='--', linewidth=1, label='-1 Std Dev')
+            ax.axvline(one_std_upper, color='#2ECC71', linestyle='--', linewidth=1, label='+1 Std Dev')
+            ax.axvline(two_std_lower, color='#E74C3C', linestyle='--', linewidth=1, label='-2 Std Dev')
+            ax.axvline(two_std_upper, color='#E74C3C', linestyle='--', linewidth=1, label='+2 Std Dev')
+            ax.axvline(ci_lower, color='#9B59B6', linestyle='-.', linewidth=0.5, label='CI Lower')
+            ax.axvline(ci_upper, color='#9B59B6', linestyle='-.', linewidth=0.5, label='CI Upper')
             
             # כותרות וצירים
-            ax.set_title(f'📊 Price Distribution with Std Dev Bands & CI\n({symbol})', fontsize=16, weight='bold', color='white')
+            ax.set_title(f' Price Distribution with Std Dev Bands & CI\n({symbol})', fontsize=12, weight='normal', color='white')
             ax.set_xlabel(f'Price ({symbol})', fontsize=12, color='white')
-            ax.set_ylabel('Frequency', fontsize=12, color='white')
+            ax.set_ylabel('Frequency', fontsize=10, color='white')
             
             # הסרת גריד, קווים סביב הגרף בצבע כהה
             ax.grid(False)
