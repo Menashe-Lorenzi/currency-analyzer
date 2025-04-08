@@ -99,6 +99,63 @@ if st.sidebar.button("Analyze"):
             
             st.pyplot(fig)
 
-
+            # ==============================
+            # Step 3: Percentage Above/Below Mean & Median + Visualization
+            # ==============================
+            
+            st.subheader("📈 Percentage of Days Above/Below Mean & Median")
+            
+            # חשב ממוצע וחציון
+            overall_mean = float(prices.mean())
+            overall_median = float(prices.median())
+            
+            # הדפס לבדיקה
+            # st.write(f"Mean: {overall_mean}, Median: {overall_median}")
+            
+            # דגלים לימים מעל ממוצע/חציון
+            data['Above Mean'] = prices > overall_mean
+            data['Above Median'] = prices > overall_median
+            
+            # אחוזים
+            perc_above_mean = data['Above Mean'].mean() * 100
+            perc_below_mean = 100 - perc_above_mean
+            perc_above_median = data['Above Median'].mean() * 100
+            perc_below_median = 100 - perc_above_median
+            
+            # הצגת ערכים
+            st.markdown(f"""
+            - **Percentage of days above Mean**: `{perc_above_mean:.2f}%`
+            - **Percentage of days below Mean**: `{perc_below_mean:.2f}%`
+            - **Percentage of days above Median**: `{perc_above_median:.2f}%`
+            - **Percentage of days below Median**: `{perc_below_median:.2f}%`
+            """)
+            
+            # גרף כהה מודרני
+            fig, ax = plt.subplots(figsize=(12, 6), facecolor='#111111')
+            ax.set_facecolor('#111111')
+            
+            # קו מחיר
+            ax.plot(data.index, prices, color='white', alpha=0.6, label='Price')
+            
+            # נקודות ירוקות/אדומות
+            colors = data['Above Mean'].map({True: '#2ECC71', False: '#E74C3C'})
+            ax.scatter(data.index, prices, c=colors, s=6, label='Above/Below Mean')
+            
+            # קווים לממוצע וחציון
+            ax.axhline(overall_mean, color='#3498DB', linestyle='--', linewidth=1.5, label=f'Mean: {overall_mean:.2f}')
+            ax.axhline(overall_median, color='#F39C12', linestyle='--', linewidth=1.5, label=f'Median: {overall_median:.2f}')
+            
+            # טקסטים ועיצוב
+            ax.set_title(f'Price vs Mean & Median ({symbol})', fontsize=16, weight='bold', color='white')
+            ax.set_xlabel('Date', fontsize=12, color='white')
+            ax.set_ylabel(f'Price ({symbol})', fontsize=12, color='white')
+            ax.tick_params(colors='white')
+            ax.legend(frameon=False, fontsize=10, loc='best', labelcolor='white')
+            
+            # הסרת גבולות מיותרים
+            for spine in ax.spines.values():
+                spine.set_color('#333333')
+            
+            st.pyplot(fig)
     except Exception as e:
         st.error(f"Error: {e}")
