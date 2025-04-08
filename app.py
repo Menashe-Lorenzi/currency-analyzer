@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
+from itertools import product
 
 st.set_page_config(page_title="Currency Analyzer", layout="wide")
 st.title("📊 Currency Analysis Tool (Yahoo Finance)")
@@ -12,6 +13,22 @@ st.title("📊 Currency Analysis Tool (Yahoo Finance)")
 symbol = st.sidebar.text_input("Enter Symbol (e.g., GBPILS=X)", value="GBPILS=X")
 start_date = st.sidebar.date_input("Start Date", pd.to_datetime("2023-01-01"))
 end_date = st.sidebar.date_input("End Date", pd.to_datetime("2024-01-01"))
+
+currencies = ['USD', 'ILS', 'EUR', 'GBP', 'JPY', 'CNY']
+rows = []
+for from_curr, to_curr in product(currencies, currencies):
+    if from_curr != to_curr:
+        symbol = f"{from_curr}{to_curr}=X"
+        rows.append({
+            'From': from_curr,
+            'To': to_curr,
+            'Yahoo Symbol': symbol
+        })
+
+df = pd.DataFrame(rows)
+print(df)
+st.subheader("🪙 Currency Symbol Table (Yahoo Finance)")
+st.dataframe(df)
 
 if st.sidebar.button("Analyze"):
     try:
