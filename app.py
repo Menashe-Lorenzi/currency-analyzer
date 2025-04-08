@@ -21,7 +21,6 @@ if st.sidebar.button("Analyze"):
             st.error("No data found for this symbol and date range.")
         else:
             prices = data["Close"].dropna()
-            prices = data["Close"].dropna()
             mean_price = float(prices.mean())
             std_price = float(prices.std(ddof=1))
             n = len(prices)
