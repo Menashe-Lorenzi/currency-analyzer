@@ -59,7 +59,7 @@ if st.sidebar.button("Analyze"):
             ax.axvline(ci_lower, color='purple', linestyle='-.', label='CI Lower')
             ax.axvline(ci_upper, color='purple', linestyle='-.', label='CI Upper')
             ax.set_title("Price Distribution with Std Dev Bands & Confidence Interval")
-           ax.set_xlabel(f'Price ({symbol})')
+            ax.set_xlabel(f'Price ({symbol})')
             ax.set_ylabel("Frequency")
             ax.legend()
             ax.grid(True)
