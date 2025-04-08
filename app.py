@@ -66,21 +66,39 @@ if st.sidebar.button("Analyze"):
             st.write(f"**{int(confidence_level * 100)}% Confidence Interval**: ({ci_lower:.4f}, {ci_upper:.4f})")
 
             st.subheader("📊 Price Distribution Histogram")
-            fig, ax = plt.subplots(figsize=(10, 5))
-            ax.hist(prices, bins=50, color='skyblue', edgecolor='black', alpha=0.7)
-            ax.axvline(mean_price, color='blue', linestyle='--', label='Mean')
-            ax.axvline(one_std_lower, color='green', linestyle='--', label='-1 Std Dev')
-            ax.axvline(one_std_upper, color='green', linestyle='--', label='+1 Std Dev')
-            ax.axvline(two_std_lower, color='red', linestyle='--', label='-2 Std Dev')
-            ax.axvline(two_std_upper, color='red', linestyle='--', label='+2 Std Dev')
-            ax.axvline(ci_lower, color='purple', linestyle='-.', label='CI Lower')
-            ax.axvline(ci_upper, color='purple', linestyle='-.', label='CI Upper')
-            ax.set_title("Price Distribution with Std Dev Bands & Confidence Interval")
-            ax.set_xlabel(f'Price ({symbol})')
-            ax.set_ylabel("Frequency")
-            ax.legend()
-            ax.grid(True)
+            fig, ax = plt.subplots(figsize=(10, 5), facecolor='#111111')  # רקע כללי כהה
+            ax.set_facecolor('#111111')  # רקע פנימי של הגרף
+            
+            # היסטוגרמה עם צבע בהיר
+            ax.hist(prices, bins=50, color='#1ABC9C', edgecolor='white', alpha=0.85)
+            
+            # קווים סטטיסטיים עם צבעים זוהרים ונעימים לעין
+            ax.axvline(mean_price, color='#3498DB', linestyle='--', linewidth=2, label='Mean')
+            ax.axvline(one_std_lower, color='#2ECC71', linestyle='--', linewidth=1.5, label='-1 Std Dev')
+            ax.axvline(one_std_upper, color='#2ECC71', linestyle='--', linewidth=1.5, label='+1 Std Dev')
+            ax.axvline(two_std_lower, color='#E74C3C', linestyle='--', linewidth=1.5, label='-2 Std Dev')
+            ax.axvline(two_std_upper, color='#E74C3C', linestyle='--', linewidth=1.5, label='+2 Std Dev')
+            ax.axvline(ci_lower, color='#9B59B6', linestyle='-.', linewidth=2, label='CI Lower')
+            ax.axvline(ci_upper, color='#9B59B6', linestyle='-.', linewidth=2, label='CI Upper')
+            
+            # כותרות וצירים
+            ax.set_title(f'📊 Price Distribution with Std Dev Bands & CI\n({symbol})', fontsize=16, weight='bold', color='white')
+            ax.set_xlabel(f'Price ({symbol})', fontsize=12, color='white')
+            ax.set_ylabel('Frequency', fontsize=12, color='white')
+            
+            # הסרת גריד, קווים סביב הגרף בצבע כהה
+            ax.grid(False)
+            for spine in ax.spines.values():
+                spine.set_color('#444444')
+            
+            # צבעי טקסט בצירים
+            ax.tick_params(colors='white', labelsize=10)
+            
+            # מקרא (לג׳נד) בלי רקע
+            ax.legend(frameon=False, fontsize=10, loc='upper right', facecolor='none', labelcolor='white')
+            
             st.pyplot(fig)
+
 
     except Exception as e:
         st.error(f"Error: {e}")
